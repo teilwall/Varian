@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding-bottom: 60px;
+            /* Space for the footer */
+        }
+
+        /* Removed .content-wrap as it's no longer needed with fixed footer */
+
+        .custom-footer {
+            background-color: #6666ff;
+            color: white;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            /* Fixed positioning */
+            bottom: 0;
+            /* Align to the bottom */
+            left: 0;
+            /* Align to the left */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 10px;
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Your page content goes here, above the footer -->
+
+    <!-- Footer -->
+    <footer class="custom-footer">
+        <div class="footer-info">
+            <div class="footer-item">
+                <p>Health Ave, Wellness City, HC 45678</p>
+            </div>
+            <div class="footer-item">
+                <p>phone: (123) 456-7890</p>
+            </div>
+            <div class="footer-item">
+                <p>email: contact@lifeextensionhospital.com</p>
+            </div>
+        </div>
+        <p>Life Extension Hospital</p>
+    </footer>
+</body>
+
+</html>

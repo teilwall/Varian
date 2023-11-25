@@ -43,60 +43,64 @@
         {% endif %}
         {% if status and user == "P" %}
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'myappointment' %}">Your Appointments <span
+          <a class="nav-link text-light" href="{% url 'myappointment' %}">Your Appointments <span
               class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'patient_invoice' %}">Invoice & Payments <span
+          <a class="nav-link text-light" href="{% url 'patient_invoice' %}">Invoice & Payments <span
               class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'profile' user=user %}">Profile <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="{% url 'medical_history'  %}">Medical History <span
+          <a class="nav-link text-light" href="{% url 'profile' user=user %}">Profile <span
               class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="/logout">Logout <span class="sr-only">(current)</span></a>
+          <a class="nav-link text-light" href="{% url 'medical_history'  %}">Medical History <span
+              class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link text-light" href="/logout">Logout <span class="sr-only">(current)</span></a>
         </li>
         {% endif %}
         {% if status and user == "D" %}
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'docter_appointment'  %}"> Appointments <span
+          <a class="nav-link text-light" href="{% url 'docter_appointment'  %}"> Appointments <span
               class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'docter_prescription'  %}">Prescriptions <span
+          <a class="nav-link text-light" href="{% url 'docter_prescription'  %}">Prescriptions <span
               class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'profile' user=user %}">Profile <span class="sr-only">(current)</span></a>
+          <a class="nav-link text-light" href="{% url 'profile' user=user %}">Profile <span
+              class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="/logout">Logout <span class="sr-only">(current)</span></a>
+          <a class="nav-link text-light" href="/logout">Logout <span class="sr-only">(current)</span></a>
         </li>
         {% endif %}
         {% if status and user == "R" %}
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'receptionist_dashboard' user=user %}"> Dashboard <span
+          <a class="nav-link text-light" href="{% url 'receptionist_dashboard' user=user %}"> Dashboard <span
               class="sr-only">(current)</span></a>
         </li>
 
         <li class="nav-item active">
-          <a class="nav-link" href="/logout">Logout <span class="sr-only">(current)</span></a>
+          <a class="nav-link text-light" href="/logout">Logout <span class="sr-only">(current)</span></a>
         </li>
         {% endif %}
         {% if status and user == "H" %}
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'hr_dashboard' %}"> Dashboard <span class="sr-only">(current)</span></a>
+          <a class="nav-link text-light" href="{% url 'hr_dashboard' %}"> Dashboard <span
+              class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'hr_accounting'  %}"> Accounting <span class="sr-only">(current)</span></a>
+          <a class="nav-link text-light" href="{% url 'hr_accounting'  %}"> Accounting <span
+              class="sr-only">(current)</span></a>
         </li>
 
         <li class="nav-item active">
-          <a class="nav-link" href="/logout">Logout <span class="sr-only">(current)</span></a>
+          <a class="nav-link text-light" href="/logout">Logout <span class="sr-only">(current)</span></a>
         </li>
         {% endif %}
       </ul>
