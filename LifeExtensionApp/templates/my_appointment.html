@@ -1,72 +1,143 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Appointment </title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" >
-	<style type="text/css">
-		.container{
-      margin-top: 30px;
-    }
-	</style>
-	</head>
+    <title>Appointment</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style type="text/css">
+        .container {
+            margin-top: 30px;
+        }
+        .button-make-appoint {
+            margin-bottom: 60px;
+            margin-left: 800px;
+            size: 50px;
+            width: 300px;
+            height: 50px;
+            border-radius: 30px;
+            color: #fff;
+            background-color: #6666ff;
+            border-color: #fff;
+        }
+    </style>
+</head>
 <body>
- {% include "nav.html" %}
+    {% include "nav.html" %}
+
+    <div class="container">
+        <!-- Trigger Modal Button -->
+        <button type="button" class="button-make-appoint" data-toggle="modal" data-target="#appointmentModal">
+            Make an appointment
+        </button>
+
+        <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="appointmentModalLabel">Appointment Form</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <!-- Form Inside Modal -->
+                      <form id="exampleForm" action="{% url 'create_appointment' user=user %}" method="POST">
+                          <div class="form-group">
+                              <label for="name">Name:</label>
+                              <input type="text" class="form-control" id="name" name="name">
+                          </div>
+
+                          <div class="form-group">
+                              <label for="appointmentDates">Select Dates and Times:</label>
+                              <input type="datetime-local" class="form-control" id="appointmentDates" name="appointmentDates">
+                          </div>
+
+                          <div class="form-group">
+                              <label for="organs">Choose an organ:</label>
+                              <select id="organs" name="organs">
+                                <option value="bladder">Bladder</option>
+                                <option value="bone">Bone</option>
+                                <option value="brain">Brain</option>
+                                <option value="breast">Breast</option>
+                                <option value="colon">Colon</option>
+                                <option value="esophagus">Esophagus</option>
+                                <option value="heart">Heart</option>
+                                <option value="kidney">Kidney</option>
+                                <option value="liver">Liver</option>
+                                <option value="lungs">Lungs</option>
+                                <option value="lymph_nodes">Lymph Nodes</option>
+                                <option value="mouth">Mouth</option>
+                                <option value="ovary">Ovary</option>
+                                <option value="pancreas">Pancreas</option>
+                                <option value="prostate">Prostate</option>
+                                <option value="rectum">Rectum</option>
+                                <option value="skin">Skin</option>
+                                <option value="stomach">Stomach</option>
+                                <option value="testicle">Testicle</option>
+                                <option value="thyroid">Thyroid</option>
+                                <option value="uterus">Uterus</option>
+                            </select>
+                            
+                          </div>
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+              </div>
+          </div>
+      </div>
 
 
+        <!-- Rest of your HTML for the table... -->
+        <div class="row">
+          <div class="col-sm-12">
+          
+            <table class="table">
+          <thead>
+        
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Time</th>
+              
+              {% if user == 'P' %}
+              <th scope="col">Docter</th>
+              {% else %}
+              <th scope="col">Patient</th>
+              {% endif %}
+              <th scope="col">Status</th>
+        
+            </tr>
+          </thead>
+          <tbody>
+                {% for data in data %}
+            <tr>
+              <th scope="row">{{ data.date }}</th>
+              <td> {{ data.time }}</td>
+              {% if user == 'P' %}
+              <td> {{ data.docterid.name }} </td>
+              {% else %}
+              <td> {{ data.patientid.name }} </td>
+              {% endif %}
+        
+        
+              <!-- <td> {{ data.patientid.name }}</td> -->
+              {% if data.status %}
+              <td>Completed</td>
+              {% else %}
+              <td>Pending</td>
+              {% endif %}
+        
+            </tr>
+            {% endfor %}
+           
+          </tbody>
+        </table>
+          </div>
+    </div>
 
-
- 
-<div class="container">
-<div class="row">
-	<div class="col-sm-12">
-	
-		<table class="table">
-  <thead>
-
-    <tr>
-      <th scope="col">Date</th>
-      <th scope="col">Time</th>
-      
-      {% if user == 'P' %}
-      <th scope="col">Docter</th>
-      {% else %}
-      <th scope="col">Patient</th>
-      {% endif %}
-      <th scope="col">Status</th>
-
-    </tr>
-  </thead>
-  <tbody>
-  	  	{% for data in data %}
-    <tr>
-      <th scope="row">{{ data.date }}</th>
-      <td> {{ data.time }}</td>
-      {% if user == 'P' %}
-      <td> {{ data.docterid.name }} </td>
-      {% else %}
-      <td> {{ data.patientid.name }} </td>
-      {% endif %}
-
-
-      <!-- <td> {{ data.patientid.name }}</td> -->
-      {% if data.status %}
-      <td>Completed</td>
-      {% else %}
-      <td>Pending</td>
-      {% endif %}
-
-    </tr>
-    {% endfor %}
-   
-  </tbody>
-</table>
-
-  </div>
-</div>
-</div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" ></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>
