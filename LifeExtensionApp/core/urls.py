@@ -37,7 +37,6 @@ urlpatterns = [
     path('create_prescription/', create_prescription , name = 'create_prescription'),
     path('medical_history/', medical_history , name = 'medical_history'),
     path('update_docter/(?P<id>\d+)/$', update_docter , name = 'update_docter'),
-    path('send_reminder/(?P<id>\d+)/$', send_reminder , name = 'send_reminder'),
     
 
 

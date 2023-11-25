@@ -192,7 +192,9 @@ def create_appointment(request , user):
         organ = request.POST['organs']
         p_id = int(request.POST['patient'])
         date_and_time = request.POST['appointmentDates']
-        new_appointment = Appointment(docterid = docter , patientid = patient, machine=machine, organ=organ ,time = date_and_time.split("T")[1] ,  date = date_and_time.split("T")[0] )
+        wheelchair = request.POST.get('wheelchairNeeded', 'No')
+        print(wheelchair)
+        new_appointment = Appointment(docterid = docter , patientid = patient, machine=machine, organ=organ ,time = date_and_time.split("T")[1] ,  date = date_and_time.split("T")[0], wheelchair=wheelchair)
         new_appointment.save()
         return redirect('myappointment')
 
@@ -231,9 +233,9 @@ def docter_appointment(request):
         status = request.user
     user_id = User.objects.get(username=request.user)
     docter= Docter.objects.get(username=user_id)
-    data = Appointment.objects.filter(docterid=docter)
+    data = Appointment.objects.all()
 
-    return render(request , 'my_appointment.html' , {'data':data, 'user' :"D" , 'status':status})
+    return render(request , 'doctorappointments.html' , {'data':data, 'user' :"D" , 'status':status})
 
 
 # Docter Prescription
@@ -322,15 +324,3 @@ def hr_accounting(request):
     consulation =  Prescription2.objects.all()
     
     return render(request , 'hr_accounting.html' , {'individual' : individual , 'consulation' : consulation , 'user' : 'H' , 'status' : status})
-
-
-
-# Send Reminder
-def send_reminder(request,id):
-    p = Prescription2.objects.get(id=id)
-    email = p.patient.email
-    subject = 'Payment Reminder '
-    message = 'Your Due Amount is {} outstanding and {} rs. you have already paid'.format(p.outstanding,p.paid)
-    recepient = [email]
-    send_mail(subject, message, EMAIL_HOST_USER, recepient, fail_silently = False)
-    return redirect('hr_accounting')
