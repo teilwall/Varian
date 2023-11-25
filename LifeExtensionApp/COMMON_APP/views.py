@@ -97,7 +97,17 @@ def logout(request):
     return redirect('/login')
 
 
-
+# Feedback
+def feedback(request):
+	status = False
+	if request.user:
+		status = request.user
+	user_id = User.objects.get(username=request.user)
+	print(user_id)
+	patient = Patient.objects.get(username = user_id)
+	data = Prescription2.objects.filter(patient = patient)
+	print(data)
+	return render(request , 'feedback.html',{"data":data , 'user' : "P" , 'status' : status})
 
 # Profile
 def profile(request, user):

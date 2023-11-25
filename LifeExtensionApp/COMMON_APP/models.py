@@ -8,6 +8,7 @@ from PATIENT.models import *
 class Appointment(models.Model):
 	docterid = models.ForeignKey('DOCTOR.Docter',on_delete = models.CASCADE)
 	patientid = models.ForeignKey('PATIENT.Patient',on_delete = models.CASCADE)
+	machine = models.TextField(max_length=50, null=True,default="")
 	organ = models.CharField(max_length=40,null=True,default="")
 	time = models.CharField(max_length =40)
 	date = models.CharField(max_length=40,default="")
