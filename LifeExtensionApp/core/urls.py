@@ -26,6 +26,7 @@ urlpatterns = [
     path('register', register , name = 'register' ),
     path('login', login , name = 'login' ),
     path('logout', logout , name = 'logout' ),
+    path('feedback', feedback, name = 'feedback' ),
     path('profile/(?P<user>.*)/$', profile , name = 'profile' ),
     path('dashboard/(?P<user>.*)/$', dashboard , name = 'dashboard'),
     path('receptionist_dashboard/(?P<user>.*)/$', receptionist_dashboard , name = 'receptionist_dashboard'),

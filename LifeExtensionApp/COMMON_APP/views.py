@@ -1,4 +1,3 @@
-import sqlite3
 from django.shortcuts import render , redirect , HttpResponse
 from django.contrib import auth
 from django.contrib.auth.models import User
@@ -22,6 +21,7 @@ from django.core.mail import send_mail
 # Create your views here.
 def home(request):
 	return render(request , 'home.html',{"user":None})
+
 
 def register(request) :
 	if request.method == 'POST':
@@ -97,6 +97,17 @@ def logout(request):
 	return redirect('/login')
 
 
+# Feedback
+def feedback(request):
+	status = False
+	if request.user:
+		status = request.user
+	user_id = User.objects.get(username=request.user)
+	print(user_id)
+	patient = Patient.objects.get(username = user_id)
+	data = Prescription2.objects.filter(patient = patient)
+	print(data)
+	return render(request , 'feedback.html',{"data":data , 'user' : "P" , 'status' : status})
 
 
 # Profile
@@ -238,7 +249,7 @@ def docter_appointment(request):
 	docter= Docter.objects.get(username=user_id)
 	data = Appointment.objects.filter(docterid=docter)
 
-	return render(request , 'my_appointment.html' , {'data':data, 'user' :"D" , 'status':status})
+	return render(request , 'doctorappointments.html' , {'data':data, 'user' :"D" , 'status':status})
 
 
 # Docter Prescription
