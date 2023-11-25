@@ -106,7 +106,6 @@ def feedback(request):
 	print(user_id)
 	patient = Patient.objects.get(username = user_id)
 	data = Prescription2.objects.filter(patient = patient)
-	print(data)
 	return render(request , 'feedback.html',{"data":data , 'user' : "P" , 'status' : status})
 
 # Profile
@@ -265,6 +264,22 @@ def docter_prescription(request):
     for i in pers:
         print(i.patient)
     return render(request , 'docter_prescription.html' , {'pers':pers, 'user' :"D" , 'status':status})
+
+def room_reservation(request):
+    status = False
+    if request.user:
+        status = request.user
+    user_id = User.objects.get(username=request.user)
+    patient = Patient.objects.get(username=user_id)
+    return render(request , 'room_reservation_doctor.html' , { 'user' :"P" , 'status' : status})
+
+def reserved_room(request):
+    status = False
+    if request.user:
+        status = request.user
+    user_id = User.objects.get(username=request.user)
+    patient = Docter.objects.get(username=user_id)
+    return render(request , 'reserved_rooms.html' , { 'user' :"D" , 'status' : status})
 
 
 # Create Prescription 
