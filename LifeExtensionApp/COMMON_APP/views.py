@@ -43,11 +43,11 @@ def register(request) :
 				c_patient = Invoice(patient = new , outstanding = 0 , paid = 0)
 				c_patient.save()
 
-				return render(request,'register.html')
+				return render(request,'login.html')
 			else:
 				new = Docter(phone=request.POST['phone'],name=request.POST['name'],email=request.POST['email'],username=user)	
 				new.save()	
-				return render(request,'register.html')
+				return render(request,'login.html')
 	
 			print('Registered Successfully')
 			return render(request,'register.html')
