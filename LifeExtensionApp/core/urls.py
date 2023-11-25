@@ -24,9 +24,8 @@ urlpatterns = [
     # Home Page
     path('', home , name = 'home' ),
     path('register', register , name = 'register' ),
+    path('contact', contact , name = 'contact' ),
     path('login', login , name = 'login' ),
-    path('about', about , name = 'about' ),
-
     path('logout', logout , name = 'logout' ),
     path('profile/(?P<user>.*)/$', profile , name = 'profile' ),
     path('dashboard/(?P<user>.*)/$', dashboard , name = 'dashboard'),

@@ -22,6 +22,10 @@ from django.core.mail import send_mail
 def home(request):
 	return render(request , 'home.html',{"user":None})
 
+# Create your views here.
+def contact(request):
+	return render(request , 'contact.html',{"user":None})
+
 def register(request) :
 	if request.method == 'POST':
 		print(request.POST['name'])
@@ -455,17 +459,6 @@ def patient_invoice(request):
 	p = Patient.objects.get(username = user_id)
 	data = Prescription2.objects.filter(patient = p)
 	return render(request , 'patient_invoice.html' , {'data':data , 'user' : 'P' , 'status' : status})
-
-
-
-
-# About 
-def about(request):
-	status = False
-	if request.user:
-		status = request.user
-	return render(request , 'about.html' )
-
 
 
 
