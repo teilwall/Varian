@@ -1,3 +1,4 @@
+import sqlite3
 from django.shortcuts import render , redirect , HttpResponse
 from django.contrib import auth
 from django.contrib.auth.models import User
@@ -37,16 +38,24 @@ def register(request) :
 		except User.DoesNotExist:
 			user = User.objects.create_user(username=request.POST['username'],password=request.POST['pass1'])
 			if request.POST['post'] == 'Patient':
-				new = Patient(phone=request.POST['phone'],name=request.POST['name'],email=request.POST['email'],username=user)	
-				new.save()	
+				new = Patient(phone=request.POST['phone'],name=request.POST['name'],email=request.POST['email'],username=user)
+				try:
+					new.save()	
+				except IntegrityError:
+					print('Phone already exists!')
+					return render(request, 'register.html')
 
 				c_patient = Invoice(patient = new , outstanding = 0 , paid = 0)
 				c_patient.save()
 
 				return render(request,'login.html')
 			else:
-				new = Docter(phone=request.POST['phone'],name=request.POST['name'],email=request.POST['email'],username=user)	
-				new.save()	
+				new = Docter(phone=request.POST['phone'],name=request.POST['name'],email=request.POST['email'],username=user)
+				try:
+					new.save()	
+				except IntegrityError:
+					print('Phone already exists!')
+					return render(request, 'register.html')
 				return render(request,'login.html')
 	
 			print('Registered Successfully')
