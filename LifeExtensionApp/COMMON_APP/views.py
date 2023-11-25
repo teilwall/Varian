@@ -73,7 +73,7 @@ def login(request):
                     return redirect('dashboard', user="P")
                 except:
                     try:
-                        data = Doctor.objects.get(username=user)
+                        data = Docter.objects.get(username=user)
                         auth.login(request, user_authenticate)
                         print('Doctor has been Logged')
                         return redirect('dashboard', user="D")
