@@ -20,8 +20,7 @@ def getRoutes(request):
         {
             'Endpoint': '/roomreservation/reserve/',
             'method': 'POST',
-            'body': {'patient_id': request.data['patient_id'],
-                     },
+            'body': {'patient_id': request.data['patient_id']},
             'description': 'Creates new note with data sent in post request'
         },
     ]
