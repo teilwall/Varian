@@ -44,6 +44,7 @@
                             <th scope="col">Patient</th>
                             {% endif %}
                             <th scope="col">Status</th>
+                            <th scope="col">Wheelchair Needed</th>
 
                         </tr>
                     </thead>
@@ -65,6 +66,8 @@
                             {% else %}
                             <td>Pending</td>
                             {% endif %}
+                            <td>{{ data.wheelchairNeeded }}</td>
+
 
                         </tr>
                         {% endfor %}
