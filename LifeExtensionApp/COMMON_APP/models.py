@@ -19,7 +19,7 @@ from PATIENT.models import *
 class Appointment(models.Model):
 	docterid = models.ForeignKey('DOCTOR.Docter',on_delete = models.CASCADE)
 	patientid = models.ForeignKey('PATIENT.Patient',on_delete = models.CASCADE)
-	machine = models.CharField(max_length=40)
+	# machine = models.CharField(max_length=40)
 	time = models.CharField(max_length =40)
 	date = models.CharField(max_length=40,default="")
 	status = models.BooleanField(max_length = 15, default=0)
@@ -34,13 +34,13 @@ class Appointment(models.Model):
 # 	username = models.OneToOneField(User,on_delete = models.CASCADE)
 
 
-class BedReservation(models.Model):
-    room_number = models.ForeignKey(to_field='room_number')
-    duration = models.DateTimeField(default=datetime.date.today()+datetime.timedelta(days=7))
-    patient_id = models.ForeignKey()
+# class BedReservation(models.Model):
+#     room_number = models.ForeignKey(to_field='room_number')
+#     duration = models.DateTimeField(default=datetime.date.today()+datetime.timedelta(days=7))
+#     patient_id = models.ForeignKey()
 
 
-class Rooms(models.Model):
-    room_number = models.IntegerField(null=True, blank=True)
-    capacity = models.IntegerField(default=4)
-    taken_beds = models.IntegerField(default=0)
+# class Rooms(models.Model):
+#     room_number = models.IntegerField(null=True, blank=True)
+#     capacity = models.IntegerField(default=4)
+#     taken_beds = models.IntegerField(default=0)

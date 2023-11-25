@@ -3,6 +3,6 @@ from django.contrib import admin
 # Register your models here.
 from .models import *
 admin.site.register(Appointment)
-admin.site.register(BedReservation)
-admin.site.register(Rooms)
+# admin.site.register(BedReservation)
+# admin.site.register(Rooms)
 
