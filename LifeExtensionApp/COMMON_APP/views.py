@@ -22,10 +22,6 @@ from django.core.mail import send_mail
 def home(request):
 	return render(request , 'home.html',{"user":None})
 
-# Create your views here.
-def contact(request):
-	return render(request , 'contact.html',{"user":None})
-
 def register(request) :
 	if request.method == 'POST':
 		print(request.POST['name'])
@@ -49,8 +45,6 @@ def register(request) :
 				new.save()	
 				return render(request,'register.html')
 	
-			print('Registered Successfully')
-			return render(request,'register.html')
 	else:
 		return render(request , 'register.html')
 
@@ -78,19 +72,7 @@ def login(request):
                         print('Doctor has been Logged')
                         return redirect('dashboard', user="D")
                     except:
-                        try:
-                            data = Receptionist.objects.get(username=user)
-                            auth.login(request, user_authenticate)
-                            print('Receptionist has been Logged')
-                            return redirect('receptionist_dashboard', user="R")
-                        except:
-                            try:
-                                data = HR.objects.get(username=user)
-                                auth.login(request, user_authenticate)
-                                print('HR has been Logged')
-                                return redirect('dashboard', user="H")
-                            except:
-                                return redirect('/')
+                        return redirect('/')
             else:
                 print('Login Failed')
                 return render(request, 'login.html')
@@ -225,79 +207,6 @@ def delete_patient(request , id ):
 	data = Patient.objects.get(id=id)
 	data.delete()
 	return redirect('receptionist_dashboard' , user="R")
-
-
-
-# Create Patient => Receptionist
-def create_patient(request):
-	status = False
-	if request.user:
-		status = request.user
-	if request.method =="POST":
-		try:
-			user = User.objects.get(username=request.POST['username'])
-			print(user)
-			return redirect('receptionist_dashboard', user = "R")
-		except User.DoesNotExist:
-
-			user = User.objects.create_user(username=request.POST['username'],password='default')	
-			try:
-				myfile = request.FILES['report']
-				fs = FileSystemStorage(location='media/report/')
-				filename = fs.save(myfile.name,myfile)
-			# print(name,file)
-				url = fs.url(filename)
-				
-			except:
-				url = ""		
-			new = Patient(phone=request.POST['phone'],name=request.POST['name'],email=request.POST['email'],username=user,age=request.POST['age'] ,address = request.POST['address'] , gender =  request.POST['gender'] , blood = request.POST['blood'] , case = request.POST['case'] , medical = url)	
-			new.save()	
-
-			c_patient = Invoice(patient = new , outstanding = request.POST['outstanding'] , paid = request.POST['paid'])
-			c_patient.save()
-			return redirect('receptionist_dashboard' , user="R")
-			
-
-	return render(request , 'create_patient.html' , {'user' : "R" , 'status' :status})
-
-
-
-# Update Patient=> Receptionist
-def update_patient(request , id ):
-	status = False
-	if request.user:
-		status = request.user
-	if request.method == "POST":
-			update = Patient.objects.get(id=id)
-			update.name = request.POST['name']
-			update.phone = request.POST['phone']
-			update.email = request.POST['email']
-			update.gender = request.POST['gender']
-			update.age = request.POST['age']
-			update.blood = request.POST['blood']
-			update.address = request.POST['address']
-			update.case = request.POST['case']
-			try:
-				myfile = request.FILES['report']
-				fs = FileSystemStorage(location='media/report/')
-				filename = fs.save(myfile.name,myfile)
-			# print(name,file)
-				url = fs.url(filename)
-				print(url)
-				update.medical = url
-			except:
-				pass
-			update.save()
-			extra_update = Invoice.objects.get(patient = update)
-
-			extra_update.outstanding = request.POST['outstanding']
-			extra_update.paid = request.POST['paid']
-			extra_update.save()
-			return redirect('receptionist_dashboard' , user = "R")
-	data = Patient.objects.get(id=id)
-	extra = Invoice.objects.get(patient = data)
-	return render(request , 'update_patient.html' , {'data':data , 'extra':extra , 'user' :"R" , 'status':status})
-
 
 def myappointment(request):
 	status = False

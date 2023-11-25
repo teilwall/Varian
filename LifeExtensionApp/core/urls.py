@@ -24,7 +24,6 @@ urlpatterns = [
     # Home Page
     path('', home , name = 'home' ),
     path('register', register , name = 'register' ),
-    path('contact', contact , name = 'contact' ),
     path('login', login , name = 'login' ),
     path('logout', logout , name = 'logout' ),
     path('profile/(?P<user>.*)/$', profile , name = 'profile' ),
@@ -32,9 +31,6 @@ urlpatterns = [
     path('receptionist_dashboard/(?P<user>.*)/$', receptionist_dashboard , name = 'receptionist_dashboard'),
     path('create_appointment/(?P<user>.*)/$', create_appointment , name = 'create_appointment'),
     path('delete_patient/(?P<id>\d+)/$', delete_patient , name = 'delete_patient'),
-    path('update_patient/(?P<id>\d+)/$', update_patient , name = 'update_patient'),
-
-    path('create_patient/', create_patient , name = 'create_patient'),
     path('myappointment/', myappointment , name = 'myappointment'),
     path('docter_appointment/', docter_appointment , name = 'docter_appointment'),
     path('docter_prescription/', docter_prescription , name = 'docter_prescription'),
