@@ -29,7 +29,6 @@ urlpatterns = [
     path('feedback', feedback, name = 'feedback' ),
     path('profile/(?P<user>.*)/$', profile , name = 'profile' ),
     path('dashboard/(?P<user>.*)/$', dashboard , name = 'dashboard'),
-    path('receptionist_dashboard/(?P<user>.*)/$', receptionist_dashboard , name = 'receptionist_dashboard'),
     path('create_appointment/(?P<user>.*)/$', create_appointment , name = 'create_appointment'),
     path('delete_patient/(?P<id>\d+)/$', delete_patient , name = 'delete_patient'),
     path('myappointment/', myappointment , name = 'myappointment'),
@@ -38,14 +37,8 @@ urlpatterns = [
     path('room_reservation/', room_reservation , name = 'room_reservation'),
     path('create_prescription/', create_prescription , name = 'create_prescription'),
     path('medical_history/', medical_history , name = 'medical_history'),
-    path('update_status/(?P<id>\d+)/$', update_status , name = 'update_status'),
-    path('hr_dashboard/', hr_dashboard , name = 'hr_dashboard'),
-    path('hr_accounting/', hr_accounting , name = 'hr_accounting'),
     path('update_docter/(?P<id>\d+)/$', update_docter , name = 'update_docter'),
-    path('delete_docter/', delete_docter , name = 'delete_docter'),
-    path('patient_invoice/', patient_invoice , name = 'patient_invoice'),
-    path('get_pdf/(?P<id>\d+)/$', get_pdf , name = 'get_pdf'),
-    path('send_reminder/(?P<id>\d+)/$', send_reminder , name = 'send_reminder'),
+    path('send_confirmation/(?P<id>\d+)/$', send_confirmation , name = 'send_confirmation'),
     
 
 
