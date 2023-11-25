@@ -177,21 +177,6 @@ def dashboard(request , user):
     return render(request , 'home.html', {'user':user, "status": status})
 
 
-
-def receptionist_dashboard(request , user):
-    status = False
-    if request.user:
-        status = request.user
-    row = Appointment.objects.all()
-    status_done = len(Appointment.objects.filter(status = 1))
-    status_pending = len(row) - status_done
-    last_patients = Patient.objects.all().order_by('-pk')[0:5]
-    print(last_patients)
-    return render(request , 'my_appointment.html' , {'user':user, "status": status , "Total" : len(row) ,
-                                                            "Done" : status_done , "Pending" : status_pending , 'all_data' : row ,  'last_patients' : last_patients})
-
-
-
 def create_appointment(request , user):
     status = False
     if request.user:
@@ -304,38 +289,6 @@ def medical_history(request):
 
 
 
-# Upadate Status
-def update_status(request  , id):
-    print(id)
-    status = False
-    if request.user:
-        status = request.user
-    if request.method == "POST":
-        data  = Appointment.objects.get(id = id)
-        pers = Prescription2.objects.get(appointment = data)
-        pers.outstanding =  request.POST['outstanding']
-        pers.paid = request.POST['paid']
-        pers.total = int(request.POST['outstanding'])+int(request.POST['paid'])
-        pers.save()
-        data.status = 1
-        data.save()
-        return redirect('receptionist_dashboard' , user = "R")
-
-    return render(request , 'update_status.html' , {'user' : "R" , "id" : id , 'status' : status})
-
-
-# HR Dashboard
-def hr_dashboard(request):
-    status = False
-    if request.user:
-        status = request.user
-    all_p = Patient.objects.all()
-    all_d = Docter.objects.all()
-    active_d = Docter.objects.filter(status = 1) 
-    return render(request , 'hr_dashboard.html' ,{"all_p":len(all_p) ,"all_d":len(all_d) ,"all_data" : all_d , "active_d":len(active_d) ,'user' : "H" , 'status' : status})
-
-
-
     # => Docter Update
 def update_docter(request , id):
     status = False
@@ -360,13 +313,6 @@ def update_docter(request , id):
     return render(request , 'update_docter.html' , {"userdata" : data , 'user' : "H" , 'status' : status})
 
 
-
-# Docter Delete
-def delete_docter(request):
-    return HttpResponse('<h2 style="color:red">You are Not authorized</h2>')
-
-
-
 # HR Accounting
 def hr_accounting(request):
     status = False
@@ -376,34 +322,6 @@ def hr_accounting(request):
     consulation =  Prescription2.objects.all()
     
     return render(request , 'hr_accounting.html' , {'individual' : individual , 'consulation' : consulation , 'user' : 'H' , 'status' : status})
-
-
-
-# Patient invoice 
-def patient_invoice(request):
-    status = False
-    if request.user:
-        status = request.user
-    user_id =  User.objects.get(username = request.user)
-    p = Patient.objects.get(username = user_id)
-    data = Prescription2.objects.filter(patient = p)
-    return render(request , 'patient_invoice.html' , {'data':data , 'user' : 'P' , 'status' : status})
-
-
-
-#  Invoice Generator
-def get_pdf(request , id):
-    data = Prescription2.objects.get(id=id)
-    pdf_data = {'data':data}
-    template = get_template('invoice.html')
-    data_p = template.render(pdf_data)
-    response = BytesIO()
-    pdf_page = pisa.pisaDocument(BytesIO(data_p.encode('UTF_8')),response)
-    if not pdf_page.err:
-        return HttpResponse(response.getvalue(),content_type = 'application/pdf')
-    else:
-        return HttpResponse('Error')
-
 
 
 
