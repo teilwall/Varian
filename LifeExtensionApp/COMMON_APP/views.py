@@ -7,6 +7,7 @@ from django import template
 from django.template.loader import get_template
 from io import BytesIO
 import xhtml2pdf.pisa as pisa
+
 from .utils import render_to_pdf #created in step 4
 from django.db import IntegrityError
 from django.conf import settings
@@ -16,6 +17,7 @@ from PATIENT.models import *
 from COMMON_APP.models import *
 from core.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
+
 
 
 # Create your views here.
@@ -59,6 +61,7 @@ def login(request):
             uname = request.POST['username']
             pwd = request.POST['pass1']
             user_authenticate = auth.authenticate(username=uname, password=pwd)
+            print("AUTH IS DONE!")
             if user_authenticate is not None:
                 user = User.objects.get(username=uname)
                 try:
@@ -69,7 +72,7 @@ def login(request):
                     return redirect('dashboard', user="P")
                 except:
                     try:
-                        data = Doctor.objects.get(username=user)
+                        data = Docter.objects.get(username=user)
                         auth.login(request, user_authenticate)
                         print('Doctor has been Logged')
                         return redirect('dashboard', user="D")
@@ -465,6 +468,13 @@ def about(request):
 	if request.user:
 		status = request.user
 	return render(request , 'about.html' )
+
+# Contact 
+def contact(request):
+	status = False
+	if request.user:
+		status = request.user
+	return render(request , 'contact.html' )
 
 
 
