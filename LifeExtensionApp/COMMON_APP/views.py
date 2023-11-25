@@ -22,6 +22,10 @@ from django.core.mail import send_mail
 def home(request):
 	return render(request , 'home.html',{"user":None})
 
+# Create your views here.
+def contact(request):
+	return render(request , 'contact.html',{"user":None})
+
 def register(request) :
 	if request.method == 'POST':
 		print(request.POST['name'])
