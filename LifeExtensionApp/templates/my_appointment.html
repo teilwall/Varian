@@ -157,7 +157,7 @@
               {% else %}
               <td>Pending</td>
               {% endif %}
-              <td>{{ data.wheelchairNeeded }}</td>
+              <td>{% if data.wheelchair %}Yes{% else %}No{% endif %}</td>
 
 
             </tr>

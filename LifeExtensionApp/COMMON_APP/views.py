@@ -192,8 +192,7 @@ def create_appointment(request , user):
         organ = request.POST['organs']
         p_id = int(request.POST['patient'])
         date_and_time = request.POST['appointmentDates']
-        wheelchair = request.POST.get('wheelchairNeeded', 'No')
-        print(wheelchair)
+        wheelchair =False if request.POST.get('wheelchairNeeded', 'No') =="No" else True 
         new_appointment = Appointment(docterid = docter , patientid = patient, machine=machine, organ=organ ,time = date_and_time.split("T")[1] ,  date = date_and_time.split("T")[0], wheelchair=wheelchair)
         new_appointment.save()
         return redirect('myappointment')
@@ -205,7 +204,31 @@ def create_appointment(request , user):
         "docter_names" : docter_names })
 
 
+def roomreservation(request):
+    status = False
+    if request.user:
+        status = request.user
 
+    if request.method == "POST":
+        d_id = int(request.POST['docter'])
+        p_id = int(request.POST['patient'])
+
+        docter = Docter.objects.get(pk=d_id)
+        patient = Patient.objects.get(pk=p_id)
+        machine = request.POST['machine']
+        organ = request.POST['organs']
+        p_id = int(request.POST['patient'])
+        date_and_time = request.POST['appointmentDates']
+        wheelchair =False if request.POST.get('wheelchairNeeded', 'No') =="No" else True 
+        new_appointment = Appointment(docterid = docter , patientid = patient, machine=machine, organ=organ ,time = date_and_time.split("T")[1] ,  date = date_and_time.split("T")[0], wheelchair=wheelchair)
+        new_appointment.save()
+        return redirect('myappointment')
+
+    patient_names = Patient.objects.all()
+    docter_names = Docter.objects.all() 
+
+    return render(request , 'create_appointment.html' , {'user':user, "status": status , "patient_names" : patient_names , 
+        "docter_names" : docter_names })
 
 # Delete Patient
 def delete_patient(request , id ):
@@ -221,7 +244,6 @@ def myappointment(request):
     patient= Patient.objects.get(username=user_id)
     data = Appointment.objects.filter(patientid=patient)
     doctors = Docter.objects.all()
-    print(patient.name)
     return render(request , 'my_appointment.html' , {'data':data, 'user' :"P" , 'doctors': doctors, 'status':status, 'user_name':patient})
 
 
