@@ -215,7 +215,8 @@ def myappointment(request):
 	user_id = User.objects.get(username=request.user)
 	patient= Patient.objects.get(username=user_id)
 	data = Appointment.objects.filter(patientid=patient)
-	return render(request , 'my_appointment.html' , {'data':data, 'user' :"P" , 'status':status})
+	doctors = Docter.objects.all()
+	return render(request , 'my_appointment.html' , {'data':data, 'user' :"P" , 'doctors' : doctors , 'status':status})
 
 
 # Doctor Appointsments
