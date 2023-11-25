@@ -42,16 +42,23 @@
                   <div class="modal-body">
                       <!-- Form Inside Modal -->
                       <form id="exampleForm" action="{% url 'create_appointment' user=user %}" method="POST">
-                          <div class="form-group">
+                        {% csrf_token %}
+                        <div class="form-group">
                               <label for="name">Name:</label>
-                              <input type="text" class="form-control" id="name" name="name">
+                                <input name="patient" value="{{user_name.pk}}" style="display: none"> </input> {{ user_name.name }}
+
                           </div>
 
                           <div class="form-group">
                               <label for="appointmentDates">Select Dates and Times:</label>
                               <input type="datetime-local" class="form-control" id="appointmentDates" name="appointmentDates">
                           </div>
-
+                          <p align="left">Doctor Name</p>
+                          <select name="docter">
+                            {% for data in doctors %}
+                            <option value="{{ data.pk }}">{{ data.name }} </option>
+                            {% endfor %}
+                          </select><br>
                           <div class="form-group">
                               <label for="organs">Choose an organ:</label>
                               <select id="organs" name="organs">
@@ -79,14 +86,25 @@
                             </select>
                             
                           </div>
-                      </form>
+                          <div class="form-group">
+                            <label for="machine">Choose a machine:</label>
+                            <select id="machine" name="machine">
+                              <option value="machine1">machine 1</option>
+                              <option value="machine2">machine 2</option>
+                              <option value="machine3">machine 3</option>
+                              <option value="machine4">machine 4</option>
+                              <option value="machine5">machine 5</option>
+                          </select>
+                          
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                    </div>
                   </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-              </div>
-          </div>
+                </form>
       </div>
 
 
