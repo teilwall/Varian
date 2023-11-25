@@ -106,7 +106,6 @@ def feedback(request):
 	print(user_id)
 	patient = Patient.objects.get(username = user_id)
 	data = Prescription2.objects.filter(patient = patient)
-	print(data)
 	return render(request , 'feedback.html',{"data":data , 'user' : "P" , 'status' : status})
 
 # Profile
@@ -195,6 +194,7 @@ def create_appointment(request , user):
         wheelchair =False if request.POST.get('wheelchairNeeded', 'No') =="No" else True 
         new_appointment = Appointment(docterid = docter , patientid = patient, machine=machine, organ=organ ,time = date_and_time.split("T")[1] ,  date = date_and_time.split("T")[0], wheelchair=wheelchair)
         new_appointment.save()
+        send_confirmation(new_appointment)
         return redirect('myappointment')
 
     patient_names = Patient.objects.all()
@@ -275,6 +275,22 @@ def docter_prescription(request):
         print(i.patient)
     return render(request , 'docter_prescription.html' , {'pers':pers, 'user' :"D" , 'status':status})
 
+def room_reservation(request):
+    status = False
+    if request.user:
+        status = request.user
+    user_id = User.objects.get(username=request.user)
+    patient = Patient.objects.get(username=user_id)
+    return render(request , 'room_reservation_doctor.html' , { 'user' :"P" , 'status' : status})
+
+def reserved_room(request):
+    status = False
+    if request.user:
+        status = request.user
+    user_id = User.objects.get(username=request.user)
+    patient = Docter.objects.get(username=user_id)
+    return render(request , 'reserved_rooms.html' , { 'user' :"D" , 'status' : status})
+
 
 # Create Prescription 
 def create_prescription(request):
@@ -314,6 +330,7 @@ def medical_history(request):
 
 
     # => Docter Update
+
 def update_docter(request , id):
     status = False
     if request.user:
@@ -346,3 +363,26 @@ def hr_accounting(request):
     consulation =  Prescription2.objects.all()
     
     return render(request , 'hr_accounting.html' , {'individual' : individual , 'consulation' : consulation , 'user' : 'H' , 'status' : status})
+
+
+
+# Send Confirmation
+def send_confirmation(a):
+	p = Patient.objects.get(id=a.patientid.id)
+	d = Docter.objects.get(id=a.docterid.id)
+	email = p.email
+	subject = 'Book Confirmation'
+	message = '''Dear {},
+
+We are thrilled to inform you that your recent appointment for Life Extension has been successfully processed. Thank you for choosing us for your literary needs.
+
+Book Details:
+Date: {}
+Time: {}
+
+Best regards,
+{}
+Life Extension kft.
+'''.format(p.name,a.date,a.time,d.name)
+	recepient = [email]
+	send_mail(subject, message, EMAIL_HOST_USER, recepient, fail_silently = False)
