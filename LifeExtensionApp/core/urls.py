@@ -19,4 +19,8 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', home , name = 'home' ),
+    path('register', register , name = 'register' ),
+    path('login', login , name = 'login' ),
+    path('about', about , name = 'about' ),
 ]
