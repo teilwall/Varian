@@ -1,4 +1,3 @@
-import sqlite3
 from django.shortcuts import render , redirect , HttpResponse
 from django.contrib import auth
 from django.contrib.auth.models import User
@@ -193,10 +192,10 @@ def create_appointment(request , user):
         p_id = int(request.POST['patient'])
         date_and_time = request.POST['appointmentDates']
         wheelchair = request.POST.get('wheelchairNeeded', 'No')
+        weight = request.POST['weight']
         print(wheelchair)
-        new_appointment = Appointment(docterid = docter , patientid = patient, machine=machine, organ=organ ,time = date_and_time.split("T")[1] ,  date = date_and_time.split("T")[0], wheelchair=wheelchair)
+        new_appointment = Appointment(docterid = docter , patientid = patient, machine=machine, organ=organ ,time = date_and_time.split("T")[1] ,  date = date_and_time.split("T")[0], wheelchair=wheelchair, weight=weight,)
         new_appointment.save()
-        send_confirmation(new_appointment)
         return redirect('myappointment')
 
     patient_names = Patient.objects.all()
@@ -293,7 +292,6 @@ def medical_history(request):
 
 
     # => Docter Update
-
 def update_docter(request , id):
     status = False
     if request.user:
@@ -326,26 +324,3 @@ def hr_accounting(request):
     consulation =  Prescription2.objects.all()
     
     return render(request , 'hr_accounting.html' , {'individual' : individual , 'consulation' : consulation , 'user' : 'H' , 'status' : status})
-
-
-
-# Send Confirmation
-def send_confirmation(a):
-	p = Patient.objects.get(id=a.patientid.id)
-	d = Docter.objects.get(id=a.docterid.id)
-	email = p.email
-	subject = 'Book Confirmation'
-	message = '''Dear {},
-
-We are thrilled to inform you that your recent appointment for Life Extension has been successfully processed. Thank you for choosing us for your literary needs.
-
-Book Details:
-Date: {}
-Time: {}
-
-Best regards,
-{}
-Life Extension kft.
-'''.format(p.name,a.date,a.time,d.name)
-	recepient = [email]
-	send_mail(subject, message, EMAIL_HOST_USER, recepient, fail_silently = False)
