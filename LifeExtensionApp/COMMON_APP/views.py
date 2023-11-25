@@ -458,17 +458,6 @@ def patient_invoice(request):
 
 
 
-
-# About 
-def about(request):
-	status = False
-	if request.user:
-		status = request.user
-	return render(request , 'about.html' )
-
-
-
-
 #  Invoice Generator
 def get_pdf(request , id):
 	data = Prescription2.objects.get(id=id)
