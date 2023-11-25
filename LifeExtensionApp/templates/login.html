@@ -35,7 +35,7 @@
 			text-align: left;
 		}
 
-		p {
+		.par {
 			font-size: 12px;
 			font-family: sans-serif;
 		}
@@ -53,7 +53,7 @@
 				{% csrf_token %}
 				<input type="text" name="username" placeholder="Username" required="" class="form-control"><br>
 				<input type="password" name="pass1" placeholder="Password" required="" class="form-control"><br>
-				<p>I do not have an accout. <a href="/register">Create an accout</a></p>
+				<p class="par">I do not have an accout. <a href="/register">Create an accout</a></p>
 				<button type="submit" class="btn btn-primary">Login</button>
 			</form>
 		</div>
