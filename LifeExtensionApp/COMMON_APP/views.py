@@ -194,6 +194,7 @@ def create_appointment(request , user):
         date_and_time = request.POST['appointmentDates']
         new_appointment = Appointment(docterid = docter , patientid = patient, machine=machine, organ=organ ,time = date_and_time.split("T")[1] ,  date = date_and_time.split("T")[0] )
         new_appointment.save()
+        send_confirmation(new_appointment)
         return redirect('myappointment')
 
     patient_names = Patient.objects.all()
@@ -290,6 +291,7 @@ def medical_history(request):
 
 
     # => Docter Update
+
 def update_docter(request , id):
     status = False
     if request.user:
@@ -325,12 +327,23 @@ def hr_accounting(request):
 
 
 
-# Send Reminder
-def send_reminder(request,id):
-    p = Prescription2.objects.get(id=id)
-    email = p.patient.email
-    subject = 'Payment Reminder '
-    message = 'Your Due Amount is {} outstanding and {} rs. you have already paid'.format(p.outstanding,p.paid)
-    recepient = [email]
-    send_mail(subject, message, EMAIL_HOST_USER, recepient, fail_silently = False)
-    return redirect('hr_accounting')
+# Send Confirmation
+def send_confirmation(a):
+	p = Patient.objects.get(id=a.patientid.id)
+	d = Docter.objects.get(id=a.docterid.id)
+	email = p.email
+	subject = 'Book Confirmation'
+	message = '''Dear {},
+
+We are thrilled to inform you that your recent appointment for Life Extension has been successfully processed. Thank you for choosing us for your literary needs.
+
+Book Details:
+Date: {}
+Time: {}
+
+Best regards,
+{}
+Life Extension kft.
+'''.format(p.name,a.date,a.time,d.name)
+	recepient = [email]
+	send_mail(subject, message, EMAIL_HOST_USER, recepient, fail_silently = False)
