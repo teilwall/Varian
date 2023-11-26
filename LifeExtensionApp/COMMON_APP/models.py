@@ -19,7 +19,7 @@ class Appointment(models.Model):
 
 # Model For RoomReservation
 class RoomReservation(models.Model):
-    room_number = models.ForeignKey("Rooms", on_delete=models.CASCADE)
+    room_number = models.ForeignKey('Rooms', on_delete=models.CASCADE)
     date = models.CharField(max_length=40)
     patient_id = models.ForeignKey('PATIENT.Patient',on_delete = models.CASCADE)
 
@@ -29,3 +29,4 @@ class Rooms(models.Model):
     room_number = models.IntegerField(null=True, blank=True)
     capacity = models.IntegerField(default=4)
     taken_beds = models.IntegerField(default=0)
+    gender = models.CharField(max_length=40, default='Female')

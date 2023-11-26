@@ -62,15 +62,8 @@
                 {% for data in data %}
             <tr>
               <th scope="row">{{ data.date }}</th>
-              <td> {{ data.time }}</td>
-              {% if user == 'P' %}
-              <td> {{ data.docterid.name }} </td>
-              {% else %}
-              <td> {{ data.patientid.name }} </td>
-              {% endif %}
+              <td> {{ data.patient_id.name }} </td>
         
-        
-              <!-- <td> {{ data.patientid.name }}</td> -->
               {% if data.status %}
               <td>Completed</td>
               {% else %}

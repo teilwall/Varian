@@ -203,33 +203,6 @@ def create_appointment(request , user):
     return render(request , 'create_appointment.html' , {'user':user, "status": status , "patient_names" : patient_names , 
         "docter_names" : docter_names })
 
-
-def roomreservation(request):
-    status = False
-    if request.user:
-        status = request.user
-
-    if request.method == "POST":
-        d_id = int(request.POST['docter'])
-        p_id = int(request.POST['patient'])
-
-        docter = Docter.objects.get(pk=d_id)
-        patient = Patient.objects.get(pk=p_id)
-        machine = request.POST['machine']
-        organ = request.POST['organs']
-        p_id = int(request.POST['patient'])
-        date_and_time = request.POST['appointmentDates']
-        wheelchair =False if request.POST.get('wheelchairNeeded', 'No') =="No" else True 
-        new_appointment = Appointment(docterid = docter , patientid = patient, machine=machine, organ=organ ,time = date_and_time.split("T")[1] ,  date = date_and_time.split("T")[0], wheelchair=wheelchair)
-        new_appointment.save()
-        return redirect('myappointment')
-
-    patient_names = Patient.objects.all()
-    docter_names = Docter.objects.all() 
-
-    return render(request , 'create_appointment.html' , {'user':user, "status": status , "patient_names" : patient_names , 
-        "docter_names" : docter_names })
-
 # Delete Patient
 def delete_patient(request , id ):
     data = Patient.objects.get(id=id)
@@ -281,15 +254,43 @@ def room_reservation(request):
         status = request.user
     user_id = User.objects.get(username=request.user)
     patient = Patient.objects.get(username=user_id)
-    return render(request , 'room_reservation_doctor.html' , { 'user' :"P" , 'status' : status})
+    data = Rooms.objects.all()
+    return render(request , 'room_reservation.html' , { 'data' : data, 'user' :"P" , 'patient' : patient, 'status' : status})
 
-def reserved_room(request):
+def reserve_room(request):
     status = False
     if request.user:
         status = request.user
     user_id = User.objects.get(username=request.user)
-    patient = Docter.objects.get(username=user_id)
-    return render(request , 'reserved_rooms.html' , { 'user' :"D" , 'status' : status})
+
+    if request.method == 'POST':
+
+        patient = Patient.objects.get(id=user_id)
+
+        rooms = int(request.POST['rooms'].split('room',1)[1])
+
+        room_number = Rooms.objects.get(room_number=rooms)
+        date_and_time = request.POST['appointmentDates']
+
+        new_room_reservation = RoomReservation(room_number=room_number,date=date_and_time,patient_id=patient.id)
+        new_room_reservation.save()
+        return redirect('room_reservation')
+
+    patient_names = Patient.objects.all()
+    docter_names = Docter.objects.all() 
+
+    return render(request , 'room_reservation.html' , {'user':request.user, "status": status , "patient_names" : patient_names , 
+        "docter_names" : docter_names })
+
+def reserved_rooms(request):
+    status = False
+    if request.user:
+        status = request.user
+    user_id = User.objects.get(username=request.user)
+    docter = Docter.objects.get(username=user_id)
+    data = RoomReservation.objects.all()
+
+    return render(request , 'reserved_rooms.html' , { 'data' : data , 'user' :"D" , 'status' : status })
 
 
 # Create Prescription 
