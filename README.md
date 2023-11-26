@@ -63,7 +63,7 @@ This project is licensed under the [MIT License](LICENSE).
 - Special thanks to the Django and Python communities for their invaluable resources.
 
 ## Contact
-For any inquiries, please open an issue in this repository or contact us directly at [your-email@example.com].
+For any inquiries, please open an issue in this repository or contact us directly at [alidinotabekov@gmail.com].
 
 
 2. Prioritization Rules:
