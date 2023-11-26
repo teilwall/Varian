@@ -28,15 +28,15 @@ This application is designed to optimize the scheduling of radiotherapy treatmen
 
 ### Installation
 1. Clone the repository:
-   git clone https://github.com/yourusername/radiotherapy-scheduling.git
+   `git clone https://github.com/yourusername/radiotherapy-scheduling.git`
 2. Navigate to the project directory:
-   cd radiotherapy-scheduling
+   `cd radiotherapy-scheduling`
 3. Install required packages:
-   pip install -r requirements.txt
+   `pip install -r requirements.txt`
 4. Run migrations:
-   python manage.py migrate
+   `python manage.py migrate`
 5. Start the Django development server:
-   python manage.py runserver
+   `python manage.py runserver`
 6. Access the application through your web browser at `localhost:8000`.
 
 ## Usage
