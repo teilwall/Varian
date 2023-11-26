@@ -14,6 +14,14 @@ This application is designed to optimize the scheduling of radiotherapy treatmen
 - **Real-Time Updates**: Handles changes in schedule promptly, with alerts for emergencies and maintenance.
 - **Data Analytics**: Offers insights into machine utilization and patient wait times.
 
+## Technologies used 
+- **Django**
+- **Python**
+- **Sqlite3**
+- **HTML\CSS**
+- **RESTAPI**
+- **LINUX**
+  
 ## Getting Started
 
 ### Prerequisites
