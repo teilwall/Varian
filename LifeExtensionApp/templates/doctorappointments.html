@@ -37,7 +37,7 @@
                         <tr>
                             <th scope="col">Date</th>
                             <th scope="col">Time</th>
-
+                            <th scope="col">Weight</th>
                             {% if user == 'P' %}
                             <th scope="col">Docter</th>
                             {% else %}
@@ -53,6 +53,7 @@
                         <tr>
                             <th scope="row">{{ data.date }}</th>
                             <td> {{ data.time }}</td>
+                            <td> {{ data.weight }}</td>
                             {% if user == 'P' %}
                             <td> {{ data.docterid.name }} </td>
                             {% else %}
@@ -66,7 +67,7 @@
                             {% else %}
                             <td>Pending</td>
                             {% endif %}
-                            <td>{% if data.wheelchair %}Yes{% else %}No{% endif %}</td>
+                            <td>{{ data.wheelchair }}</td>
 
 
                         </tr>

@@ -1,4 +1,3 @@
-import sqlite3
 from django.shortcuts import render , redirect , HttpResponse
 from django.contrib import auth
 from django.contrib.auth.models import User
@@ -191,8 +190,10 @@ def create_appointment(request , user):
         organ = request.POST['organs']
         p_id = int(request.POST['patient'])
         date_and_time = request.POST['appointmentDates']
-        wheelchair =False if request.POST.get('wheelchairNeeded', 'No') =="No" else True 
-        new_appointment = Appointment(docterid = docter , patientid = patient, machine=machine, organ=organ ,time = date_and_time.split("T")[1] ,  date = date_and_time.split("T")[0], wheelchair=wheelchair)
+        wheelchair = request.POST.get('wheelchairNeeded', 'No')
+        weight = request.POST['weight']
+        print(wheelchair)
+        new_appointment = Appointment(docterid = docter , patientid = patient, machine=machine, organ=organ ,time = date_and_time.split("T")[1] ,  date = date_and_time.split("T")[0], wheelchair=wheelchair, weight=weight,)
         new_appointment.save()
         send_confirmation(new_appointment)
         return redirect('myappointment')
@@ -331,7 +332,6 @@ def medical_history(request):
 
 
     # => Docter Update
-
 def update_docter(request , id):
     status = False
     if request.user:
@@ -364,7 +364,6 @@ def hr_accounting(request):
     consulation =  Prescription2.objects.all()
     
     return render(request , 'hr_accounting.html' , {'individual' : individual , 'consulation' : consulation , 'user' : 'H' , 'status' : status})
-
 
 
 # Send Confirmation

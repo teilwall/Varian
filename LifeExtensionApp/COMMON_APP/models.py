@@ -14,7 +14,8 @@ class Appointment(models.Model):
 	time = models.CharField(max_length =40)
 	date = models.CharField(max_length=40,default="")
 	status = models.BooleanField(max_length = 15, default=0)
-	wheelchair = models.BooleanField(default=False)
+	wheelchair = models.CharField(max_length = 15)
+	weight = models.IntegerField(default=55)
 
 
 # Model For RoomReservation
